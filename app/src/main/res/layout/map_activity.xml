@@ -13,6 +13,13 @@
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints">
 
+        <Button
+            android:id="@+id/dodaj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dodaj"
+            android:onClick="dodaj"/>
+
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
