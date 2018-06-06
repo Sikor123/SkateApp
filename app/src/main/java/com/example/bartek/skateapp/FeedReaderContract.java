@@ -9,18 +9,18 @@ public class FeedReaderContract {
 
     /* Inner class that defines the table contents */
     public static class FeedEntry implements BaseColumns {
-        public static final String TABLE_NAME = "entry";
+        public static final String TABLE_NAME = "Place";
         public static final String COLUMN_NAME_TITLE = "title";
-        public static final String COLUMN_NAME_OPIS = "opis";
+        public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_LAT = "lat";
         public static final String COLUMN_NAME_LNG = "lng";
     }
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
-                    FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedEntry.COLUMN_NAME_TITLE + " TEXT," +
-                    FeedEntry.COLUMN_NAME_OPIS + " TEXT," +
+                    FeedEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     FeedEntry.COLUMN_NAME_LAT + " REAL," +
                     FeedEntry.COLUMN_NAME_LNG + " REAL)";
 

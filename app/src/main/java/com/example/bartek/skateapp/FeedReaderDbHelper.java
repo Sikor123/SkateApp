@@ -1,6 +1,8 @@
 package com.example.bartek.skateapp;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -23,6 +25,47 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+    public void addPlace(String title, String description, double lat, double lng) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, title);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DESCRIPTION, description);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAT, lat);
+        values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, lng);
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+    }
+    public Place getPlace(int id){
+        Place place = new Place();
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {FeedReaderContract.FeedEntry._ID, FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE, FeedReaderContract.FeedEntry.COLUMN_NAME_DESCRIPTION, FeedReaderContract.FeedEntry.COLUMN_NAME_LAT, FeedReaderContract.FeedEntry.COLUMN_NAME_LNG};
+        String selection = FeedReaderContract.FeedEntry._ID + " = ?";
+        String selectionArgs[] = {id+""};
+        // How you want the results sorted in the resulting Cursor
+        Cursor cursor = db.query(
+                FeedReaderContract.FeedEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null              // The sort order
+        );
+        if(cursor != null){
+            cursor.moveToFirst();
+            place.setId(cursor.getInt(0));
+            place.setTitle(cursor.getString(1));
+            place.setDescription(cursor.getString(2));
+            place.setLat(cursor.getDouble(3));
+            place.setLng(cursor.getDouble(4));
+        }
+        cursor.close();
+        return place;
     }
 }
 
