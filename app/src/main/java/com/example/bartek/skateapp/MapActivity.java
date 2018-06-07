@@ -32,25 +32,26 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private int STORAGE_PERMISSION_CODE = 1;
     private int STORAGE_PERMISSION_CODE2 = 1;
     GoogleMap mGoogleMap;
-    GoogleApiClient mGoogleApiClient;
-    Button btn;
+//    GoogleApiClient mGoogleApiClient;
+//    Button btn;
     Marker marker;
     ArrayList<Marker> markers = new ArrayList<Marker>();
-    String nazwa;
-    String opis;
+//    String nazwa;
+    //String opis;
+    FeedReaderDbHelper db;
 
 
     //    GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         if (googleServicesAvailable()) {
             Toast.makeText(this, "Perfect", Toast.LENGTH_LONG).show();
@@ -82,7 +83,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+        mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
 
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker m) {
+                    marker.setPosition(m.getPosition());
+            }
+        });
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=   PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -133,8 +149,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             });
         }
-        goToLocation(52.254432, 20.844915 , 15);
 
+        goToLocation(52.254432, 20.844915 , 15);
+        db = new FeedReaderDbHelper(this);
+        LinkedList<Place> miejsca;
+        miejsca = db.getAllPlaces();
+        Log.i("DB::", "jestem");
+        for (Place m:miejsca ) {
+            Log.i("DB::", "wlazlem");
+            MarkerOptions options = new MarkerOptions().position(new LatLng(m.getLat() , m.getLng())).title(m.getTitle()).snippet(m.getDescription());
+            Log.i("DB::", "wylazlem");
+            marker = mGoogleMap.addMarker(options);
+            markers.add(marker);
+            int height = 100;
+            int width = 100;
+            BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.mipmap.rolek);
+            Bitmap b=bitmapdraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            db.removePlace(m.getId());
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+        }
 
     }
 
@@ -197,9 +231,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         else
         {
 
-            Log.i("Action::", "clicked!!");
+
             CameraPosition cm = mGoogleMap.getCameraPosition();
-            Log.i("Action::", cm.target.toString());
+            Toast.makeText(this, "Drag&Drop", Toast.LENGTH_LONG).show();
             b.setText("zapisz");
             MarkerOptions options = new MarkerOptions().title("mojdom").position(cm.target).draggable(true);
             marker = mGoogleMap.addMarker(options);
@@ -217,6 +251,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             marker.setSnippet(data.getStringExtra("opis"));
             marker.setVisible(true);
             marker.setDraggable(false);
+            Log.i("Action::", marker.getId());
 
             int height = 100;
             int width = 100;
@@ -225,6 +260,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+            LatLng ll = marker.getPosition();
+            marker.setPosition(ll);
+            db.addPlace(marker.getTitle() , marker.getSnippet() ,ll.latitude , ll.longitude );
             if(marker != null){
 
             markers.add(marker);
