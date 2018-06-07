@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="WelcomeScreen"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="245dp" />
+
+    <LinearLayout
+        android:background="@color/WelcomeScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="342dp"
+            app:srcCompat="@mipmap/ziomek" />
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            app:srcCompat="@mipmap/cool_text" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Put on skates, and get your ass outside"
+            android:textColor="#e8cded"
+            android:textSize="18dp" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

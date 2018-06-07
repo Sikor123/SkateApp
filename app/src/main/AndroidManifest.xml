@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".WelcomeScreen">
+        <activity android:name=".WelcomeScreen"
+            android:theme="@style/WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
