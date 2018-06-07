@@ -2,6 +2,8 @@ package com.example.bartek.skateapp;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -34,6 +38,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     ArrayList<Marker> markers = new ArrayList<Marker>();
     String nazwa;
     String opis;
+
 
     //    GoogleApiClient mGoogleApiClient;
     @Override
@@ -71,6 +76,34 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+
+        if(mGoogleMap != null){
+            mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
+
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    return null;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+                    View v = getLayoutInflater().inflate(R.layout.info_window, null);
+
+                    TextView tvLocality = (TextView) v.findViewById(R.id.tv_locality);
+                    TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
+                    TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
+                    TextView tvSnippet = (TextView) v.findViewById(R.id.tv_snippet);
+
+                    LatLng ll = marker.getPosition();
+                    tvLocality.setText(marker.getTitle());
+                    tvLat.setText("Latitude: " + ll.latitude);
+                    tvLng.setText("Longitude: " + ll.longitude);
+                    tvSnippet.setText(marker.getSnippet());
+
+                    return v;
+                }
+            });
+        }
         goToLocation(52.254432, 20.844915 , 15);
 
 
@@ -155,6 +188,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             marker.setSnippet(data.getStringExtra("opis"));
             marker.setVisible(true);
             marker.setDraggable(false);
+
+            int height = 100;
+            int width = 100;
+            BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.mipmap.rolek);
+            Bitmap b=bitmapdraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             if(marker != null){
 
             markers.add(marker);
