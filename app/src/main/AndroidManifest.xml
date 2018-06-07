@@ -46,6 +46,10 @@
         <activity android:name=".MapActivity">
 
         </activity>
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCQSu4GP4DjRkGoFe0cTsou0kMWnh7gZds"/>
         <meta-data android:name="com.google.android.gms.version"

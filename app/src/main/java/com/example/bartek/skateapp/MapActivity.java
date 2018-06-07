@@ -26,15 +26,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap mGoogleMap;
     Button btn;
     Marker marker;
     ArrayList<Marker> markers = new ArrayList<Marker>();
-
+    String nazwa;
+    String opis;
 
     //    GoogleApiClient mGoogleApiClient;
     @Override
@@ -126,10 +125,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(buttonText == "zapisz")
         {
             Log.i("Action::", "save!!");
+            Intent intent = new Intent(this , PopActivity.class);
+            startActivityForResult(intent , 999);
+
             b.setText("dodaj");
-            if(marker != null)
-                markers.add(marker);
-                marker = null;
+
+
         }
         else
         {
@@ -141,9 +142,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             MarkerOptions options = new MarkerOptions().title("mojdom").position(cm.target).draggable(true);
             marker = mGoogleMap.addMarker(options);
         }
+    }
+
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 999 && resultCode == RESULT_OK)
+        {
 
 
+            String tytul = data.getStringExtra("tytul") ;
+            marker.setTitle(tytul);
+            marker.setSnippet(data.getStringExtra("opis"));
+            marker.setVisible(true);
+            marker.setDraggable(false);
+            if(marker != null){
 
+            markers.add(marker);
+            marker = null;
+        }
+        }
     }
 
 
