@@ -22,7 +22,7 @@ public class FeedReaderContract {
                     FeedEntry.COLUMN_NAME_TITLE + " TEXT," +
                     FeedEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     FeedEntry.COLUMN_NAME_LAT + " REAL," +
-                    FeedEntry.COLUMN_NAME_LNG + " REAL)";
+                    FeedEntry.COLUMN_NAME_LNG + " REAL )";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
