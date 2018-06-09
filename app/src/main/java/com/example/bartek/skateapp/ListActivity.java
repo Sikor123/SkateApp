@@ -11,6 +11,7 @@ public class ListActivity extends AppCompatActivity {
     ListView listView;
     LinkedList<Place> places = new LinkedList<>();
     FeedReaderDbHelper db = new FeedReaderDbHelper(this);
+    PlaceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +19,15 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         listView = findViewById(R.id.lista);
         places = db.getAllPlaces();
-
-        PlaceAdapter adapter = new PlaceAdapter(this, 0, places);
+        adapter = new PlaceAdapter(this, 0, places);
         listView.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        places = db.getAllPlaces();
+        adapter.updateData(places);
     }
 }

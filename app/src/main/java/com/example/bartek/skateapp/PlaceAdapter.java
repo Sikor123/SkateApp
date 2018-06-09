@@ -31,6 +31,10 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
         return places.size();
     }
 
+    public void updateData(LinkedList<Place> newPlaces){
+        places = newPlaces;
+        this.notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -40,14 +44,12 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
         LayoutInflater inflater = (LayoutInflater)con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.listitem,null, true);
 
-        TextView txtId = row.findViewById(R.id.txtId);
         TextView txtTitle = row.findViewById(R.id.txtTitle);
         TextView txtDescription = row.findViewById(R.id.txtDescription);
         ImageView doMapy = row.findViewById(R.id.doMapy);
         ImageView usunImg = row.findViewById(R.id.usunImg);
 
-        txtId.setText("" + (position + 1));
-        txtTitle.setText(places.get(position).getTitle());
+        txtTitle.setText("" + (position + 1) + ". " + places.get(position).getTitle());
         txtDescription.setText(places.get(position).getDescription());
 
 

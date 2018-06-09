@@ -191,7 +191,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         CameraUpdate update  = CameraUpdateFactory.newLatLngZoom(ll , i);
         mGoogleMap.moveCamera(update);
     }
-
     private void goToLocation(double lat, double lng) {
         LatLng ll = new LatLng(lat , lng);
         CameraUpdate update  = CameraUpdateFactory.newLatLng(ll);
