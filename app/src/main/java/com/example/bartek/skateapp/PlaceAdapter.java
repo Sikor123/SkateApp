@@ -18,6 +18,7 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
     private LinkedList<Place> places;
     Context con;
 
+
     public PlaceAdapter(@NonNull Context context, int resource, LinkedList<Place> list) {
         super(context, resource);
 
@@ -29,6 +30,7 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
     public int getCount() {
         return places.size();
     }
+
 
     @NonNull
     @Override
@@ -42,10 +44,13 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
         TextView txtTitle = row.findViewById(R.id.txtTitle);
         TextView txtDescription = row.findViewById(R.id.txtDescription);
         ImageView doMapy = row.findViewById(R.id.doMapy);
+        ImageView usunImg = row.findViewById(R.id.usunImg);
 
         txtId.setText("" + (position + 1));
         txtTitle.setText(places.get(position).getTitle());
         txtDescription.setText(places.get(position).getDescription());
+
+
 
         doMapy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +65,16 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
                 con.startActivity(mapIntent);
             }
         });
+        usunImg.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Toast.makeText(getContext(), "Usuwam id: " + (position + 1), Toast.LENGTH_SHORT).show();
+              FeedReaderDbHelper db = new FeedReaderDbHelper(con);
+              db.removePlace(places.get(position).getId());
+              places = db.getAllPlaces();
+              notifyDataSetChanged();
+          }
+      });
 
         return row;
     }
