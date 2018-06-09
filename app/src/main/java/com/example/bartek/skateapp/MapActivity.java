@@ -150,7 +150,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             });
         }
 
-        goToLocation(52.254432, 20.844915 , 15);
+
+        double newLat, newLng;
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            newLat = 52.254432;
+            newLng = 20.844915;
+        } else {
+            newLat = extras.getDouble("LAT_I_NEED");
+            newLng = extras.getDouble("LNG_I_NEED");
+        }
+
+
+
+
+        goToLocation(newLat, newLng , 15);
         db = new FeedReaderDbHelper(this);
         LinkedList<Place> miejsca;
         miejsca = db.getAllPlaces();

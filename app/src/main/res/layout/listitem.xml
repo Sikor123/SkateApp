@@ -9,26 +9,58 @@
 
     <TextView
         android:id="@+id/txtId"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="TextView"
+        android:text="1"
         android:textSize="32dp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textStyle="bold"
+            android:textSize="20dp"
+
+            />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="TextView"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/doMapy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:drawable/ic_dialog_map" />
+    </LinearLayout>
+
 </LinearLayout>
