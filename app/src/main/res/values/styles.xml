@@ -28,6 +28,9 @@
     <style name="AppTheme.CustomTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@drawable/pop_drawable</item>
+
     </style>
+
 
 </resources>
