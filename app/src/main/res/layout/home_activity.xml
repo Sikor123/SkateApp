@@ -23,18 +23,18 @@
 
         <Button
             android:id="@+id/mapBtn"
-            android:padding="10dp"
             android:layout_width="220dp"
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
-            android:textColor="#ffffff"
-            android:text="   Find spots on map"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dp"
-            android:drawableLeft="@android:drawable/ic_dialog_map"
-            android:shadowColor="#ffffff"
             android:background="@drawable/button_transparent"
-            />
+            android:drawableLeft="@android:drawable/ic_dialog_map"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="left|center_vertical"
+            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="#ffffff"
+            android:text="   Find spots on map"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_marginTop="20dp"
@@ -47,6 +47,7 @@
             android:gravity="left|center_vertical"
             android:paddingLeft="10dp"
             android:drawableLeft="@drawable/list"
+            android:fontFamily="sans-serif-smallcaps"
             android:shadowColor="#ffffff"
             android:background="@drawable/button_transparent"/>
 
