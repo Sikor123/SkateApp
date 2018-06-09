@@ -12,6 +12,8 @@
         <item name="colorPrimary">@color/WelcomeScreen</item>
         <item name="colorPrimaryDark">@color/WelcomeScreen</item>
         <item name="colorAccent">@color/WelcomeScreen</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
 
     </style>
 

@@ -166,7 +166,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.mipmap.rolek);
             Bitmap b=bitmapdraw.getBitmap();
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-            db.removePlace(m.getId());
+
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         }
 

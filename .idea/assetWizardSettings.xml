@@ -18,6 +18,28 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="foregroundClipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="ffffff" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundClipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio1/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_bookmark_border_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
@@ -35,13 +57,55 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="4643b9" />
-                                      <entry key="foregroundImage" value="C:\Users\Bartek\Desktop\icon.png" />
+                                      <entry key="backgroundLayerName" value="bookbak" />
+                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+                                      <entry key="foregroundImage" value="C:\Users\Bartek\Desktop\bookmark.svg" />
+                                      <entry key="foregroundLayerName" value="bookfor" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
+                                      <entry key="outputName" value="book_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio1/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_bulleted_black_24dp.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="list" />
+                            <entry key="sourceFile" value="C:\Users\Bartek\Desktop\list-ul.svg" />
                           </map>
                         </option>
                       </PersistentState>
