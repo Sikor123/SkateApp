@@ -10,17 +10,26 @@ import android.widget.Button;
 public class HomeActivity extends AppCompatActivity {
 
     Button mapBtn;
+    Button dataBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         mapBtn = findViewById(R.id.mapBtn);
+        dataBtn = findViewById(R.id.dataBtn);
         mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mapIntent = new Intent(HomeActivity.this , MapActivity.class);
                 startActivity(mapIntent);
+            }
+        });
+        dataBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dataIntent = new Intent(HomeActivity.this , ListActivity.class);
+                startActivity(dataIntent);
             }
         });
     }
