@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,26 +39,31 @@ import java.util.LinkedList;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+
+
     private int STORAGE_PERMISSION_CODE = 1;
     private int STORAGE_PERMISSION_CODE2 = 1;
     GoogleMap mGoogleMap;
 //    GoogleApiClient mGoogleApiClient;
 //    Button btn;
     Marker marker;
-    ArrayList<Marker> markers = new ArrayList<Marker>();
+    ArrayList<MapMarker> markers = new ArrayList<MapMarker>();
 //    String nazwa;
     //String opis;
     FeedReaderDbHelper db;
-
 
     //    GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ImageView usunImg = findViewById(R.id.usunImg);
+
 
         if (googleServicesAvailable()) {
             Toast.makeText(this, "Perfect", Toast.LENGTH_LONG).show();
             setContentView(R.layout.map_activity);
+            ImageButton b = (ImageButton) findViewById(R.id.dodaj);
+            b.setBackgroundResource(R.drawable.ic_add);
             initMap();
         }
     }
@@ -125,25 +133,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(mGoogleMap != null){
             mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
 
+
+
                 @Override
                 public View getInfoWindow(Marker marker) {
-                    return null;
+                    return  null;
                 }
 
                 @Override
                 public View getInfoContents(Marker marker) {
+
                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
+
 
                     TextView tvLocality = (TextView) v.findViewById(R.id.tv_locality);
                     TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
                     TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
                     TextView tvSnippet = (TextView) v.findViewById(R.id.tv_snippet);
 
+
                     LatLng ll = marker.getPosition();
                     tvLocality.setText(marker.getTitle());
                     tvLat.setText("Latitude: " + ll.latitude);
                     tvLng.setText("Longitude: " + ll.longitude);
                     tvSnippet.setText(marker.getSnippet());
+
 
                     return v;
                 }
@@ -174,7 +188,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             MarkerOptions options = new MarkerOptions().position(new LatLng(m.getLat() , m.getLng())).title(m.getTitle()).snippet(m.getDescription());
             Log.i("DB::", "wylazlem");
             marker = mGoogleMap.addMarker(options);
-            markers.add(marker);
+            markers.add(new MapMarker(marker , m.getId()));
             int height = 100;
             int width = 100;
             BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.mipmap.rolek);
@@ -226,28 +240,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return false;
     }
 
-
+    private boolean dodaj = true;
     public void dodaj(View view){
-        Button b = (Button)view;
-        String buttonText = b.getText().toString();
-        b.setText("dodaj");
-        if(buttonText == "zapisz")
+        ImageButton b = (ImageButton) view;
+
+
+        if(dodaj == false)
         {
             Log.i("Action::", "save!!");
             Intent intent = new Intent(this , PopActivity.class);
             startActivityForResult(intent , 999);
-
-            b.setText("dodaj");
+            b.setBackgroundResource(R.drawable.ic_add);
+            dodaj = true;
 
 
         }
         else
         {
-
-
+            dodaj = false;
+            b.setBackgroundResource(R.drawable.ic_done);
             CameraPosition cm = mGoogleMap.getCameraPosition();
             Toast.makeText(this, "Drag&Drop", Toast.LENGTH_LONG).show();
-            b.setText("zapisz");
+
             MarkerOptions options = new MarkerOptions().title("mojdom").position(cm.target).draggable(true);
             marker = mGoogleMap.addMarker(options);
         }
@@ -258,7 +272,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(requestCode == 999 && resultCode == RESULT_OK)
         {
 
-
+            long id;
             String tytul = data.getStringExtra("tytul") ;
             marker.setTitle(tytul);
             marker.setSnippet(data.getStringExtra("opis"));
@@ -275,14 +289,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
             LatLng ll = marker.getPosition();
             marker.setPosition(ll);
-            db.addPlace(marker.getTitle() , marker.getSnippet() ,ll.latitude , ll.longitude );
+            id = db.addPlace(marker.getTitle() , marker.getSnippet() ,ll.latitude , ll.longitude );
             if(marker != null){
 
-            markers.add(marker);
+            markers.add(new MapMarker(marker , id));
             marker = null;
         }
         }
     }
+
+
+
 
 
 

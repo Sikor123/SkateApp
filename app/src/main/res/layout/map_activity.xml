@@ -12,18 +12,27 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints">
-
-        <Button
-            android:id="@+id/dodaj"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dodaj"
-            android:onClick="dodaj"/>
+            android:layout_height="match_parent">
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:id="@+id/mapView2"/>
+            <fragment
+
+                android:id="@+id/mapView2"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/dodaj"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:onClick="dodaj"/>
+
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
