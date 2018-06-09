@@ -29,7 +29,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-    public void addPlace(String title, String description, double lat, double lng) {
+    public long addPlace(String title, String description, double lat, double lng) {
         // Gets the data repository in write mode
         SQLiteDatabase db = getWritableDatabase();
 
@@ -42,6 +42,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+        return newRowId;
     }
     public Place getPlace(int id){
         Place place = new Place();
