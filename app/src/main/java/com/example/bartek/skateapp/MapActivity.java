@@ -142,6 +142,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
             + ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION));
+//            Intent intent = new Intent(this , MapActivity.class);
+//            startActivity(intent);
+            finish();
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
@@ -183,8 +186,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         double newLat, newLng;
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
-            newLat = 52.254432;
-            newLng = 20.844915;
+             
+            newLat = 52.253195;
+            newLng = 20.899582;
         } else {
             newLat = extras.getDouble("LAT_I_NEED");
             newLng = extras.getDouble("LNG_I_NEED");
@@ -196,6 +200,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         goToLocation(newLat, newLng , 15);
         db = new FeedReaderDbHelper(this);
         LinkedList<Place> miejsca;
+        miejsca = db.getAllPlaces();
+        if(miejsca.isEmpty())
+        {
+            db.addPlace("Kółko" , "Świetne miejsce do freestyleSlalomu" , 52.233930, 20.954781);
+            db.addPlace("SkatePark" , "Kilka ramp i sporo asfaltu" , 52.232920, 20.948937);
+            db.addPlace("Parking" , "Gładki asfalt, który pokocha każdy rolkarz"  , 52.253980, 20.842129);
+            db.addPlace("Bulwary" , "Kilka Kilometrów, z naprawdę przepięknym widokiem" , 52.255193, 21.012559);
+        }
         miejsca = db.getAllPlaces();
         Log.i("DB::", "jestem");
         for (Place m:miejsca ) {

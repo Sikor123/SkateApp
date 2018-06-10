@@ -31,10 +31,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
      */
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FeedReaderContract.getSqlCreateEntries());
-        this.addPlace("Kółko" , "Świetne miejsce do freestyleSlalomu" , 52.233930, 20.954781);
-        this.addPlace("SkatePark" , "Kilka ramp i sporo asfaltu" , 52.232920, 20.948937);
-        this.addPlace("Parking" , "Gładki asfalt, który pokocha każdy rolkarz"  , 52.253980, 20.842129);
-        this.addPlace("Bulwary" , "Kilka Kilometrów, z naprawdę przepięknym widokiem" , 52.255193, 21.012559);
+
     }
 
     /**
