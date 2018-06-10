@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
-            android:text="Put on skates, and get your ass outside"
+            android:text="put on skates, and get yourself outside"
             android:textColor="#e8cded"
             android:textSize="18dp" />
     </LinearLayout>
