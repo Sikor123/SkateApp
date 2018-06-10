@@ -37,22 +37,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+
+/**
+ *Klasa wyświetlająca aktywność z dużą mapą zajmującą prawie cały ekran.
+ * Na mapie wyświetlane są znaczniki w miejscach, gdzie zostały dodane spoty dla rolkarzy.
+ * w prawym górnym rogu znajduje się przycisk, który wyświetla menu z wyborem mapy
+ * w lewym górnym rogu mapy znajduje się przycisk do dodawania spotów.
+ * po ustawieniu spotu w odpowiednie miejsce za pomocą metody Drag&Drop,
+ * nazeży zatwierdzić miejsce klikając w ptaszek i wpisać dane do okna które się wyświetli.
+ */
+
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-
-
     private int STORAGE_PERMISSION_CODE = 1;
-    private int STORAGE_PERMISSION_CODE2 = 1;
     GoogleMap mGoogleMap;
-//    GoogleApiClient mGoogleApiClient;
-//    Button btn;
     Marker marker;
     ArrayList<MapMarker> markers = new ArrayList<MapMarker>();
-//    String nazwa;
-    //String opis;
     FeedReaderDbHelper db;
-
-    //    GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    public boolean googleServicesAvailable() {
+    private boolean googleServicesAvailable() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
         if (isAvailable == ConnectionResult.SUCCESS) {
@@ -88,20 +89,34 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return false;
     }
 
+    /**
+     * Metoda, która ustawia najważniejsze parametry mapy, przystosowane do naszej aplikacji
+     * @param googleMap obiekt mapy Google
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            /**
+             * Metoda wywoływana podczas podnoszenia markera metodą Drag&Drop
+             * @param marker obiekt markera który będziemy przesuwac
+             */
             @Override
             public void onMarkerDragStart(Marker marker) {
 
             }
-
+            /**
+             * Metoda wywoływana podczas przenoszenia markera metodą Drag&Drop
+             * @param marker obiekt markera który będziemy przesuwac
+             */
             @Override
             public void onMarkerDrag(Marker marker) {
 
             }
-
+            /**
+             * Metoda wywoływana podczas opuszczania markera metodą Drag&Drop
+             * @param m obiekt markera który jest teraz na mapie
+             */
             @Override
             public void onMarkerDragEnd(Marker m) {
                     marker.setPosition(m.getPosition());
@@ -210,12 +225,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         CameraUpdate update  = CameraUpdateFactory.newLatLng(ll);
         mGoogleMap.moveCamera(update);
     }
+
+    /**
+     * metoda wywoływana podczas tworzenia menu
+     * @param menu jest to menu, które będzie wyświetlane
+     * @return zwracany typ informuje o poprawności wywołania metody
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * metoda wywołująca się podczas kliknięcia na jakiś element rozwojanego menu.
+     * zmienia typ wyświetlanej mapy.
+     * @param item jets to obiekt klasy item będący rekordem menu na który kliknął urzytkownik.
+     * @return metoda zwraca false za każdym razem
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mapTypeNone:
@@ -241,7 +268,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private boolean dodaj = true;
-    public void dodaj(View view){
+    protected void dodaj(View view){
         ImageButton b = (ImageButton) view;
 
 
@@ -290,6 +317,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             LatLng ll = marker.getPosition();
             marker.setPosition(ll);
             id = db.addPlace(marker.getTitle() , marker.getSnippet() ,ll.latitude , ll.longitude );
+
             if(marker != null){
 
             markers.add(new MapMarker(marker , id));

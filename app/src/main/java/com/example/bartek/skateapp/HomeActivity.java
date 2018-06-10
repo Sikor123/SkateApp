@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Klasa rozszerzająca AppCompatActivity, będąca aktywnością, która wyświetla się po WelcomeScreenie.
+ * Zawiera wygląd, oraz 2 przyciski przechodzące do kolejnych aktywnosci.
+ */
 public class HomeActivity extends AppCompatActivity {
 
-    Button mapBtn;
-    Button dataBtn;
+    private Button mapBtn;
+    private Button dataBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

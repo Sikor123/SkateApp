@@ -10,6 +10,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Klasa wyświetla ekran startowy, ktory pokazuje się przez 5,5 sekundy
+ */
 public class WelcomeScreen extends AppCompatActivity {
 
     private ImageView napis;
