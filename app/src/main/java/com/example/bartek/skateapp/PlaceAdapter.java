@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import java.util.LinkedList;
 
-public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
+
+
+class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
     private LinkedList<Place> places;
-    Context con;
+    private Context con;
 
 
     public PlaceAdapter(@NonNull Context context, int resource, LinkedList<Place> list) {
@@ -57,7 +59,7 @@ public class PlaceAdapter extends ArrayAdapter<LinkedList<Place>> {
         doMapy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Kliknalem w id: " + (position + 1), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Przechodzę do mapy.", Toast.LENGTH_SHORT).show();
 
                 Intent mapIntent = new Intent(con, MapActivity.class);
                 double lat = places.get(position).getLat();

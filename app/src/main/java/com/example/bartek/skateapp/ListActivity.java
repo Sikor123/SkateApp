@@ -6,12 +6,16 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 
+/**
+ * Klasa rozszerzająca AppCompatActivity.
+ * Zawiera wygląd, oraz listView wyświetlający liste miejsc w bazie danych.
+ */
 public class ListActivity extends AppCompatActivity {
 
-    ListView listView;
-    LinkedList<Place> places = new LinkedList<>();
-    FeedReaderDbHelper db = new FeedReaderDbHelper(this);
-    PlaceAdapter adapter;
+    private ListView listView;
+    private LinkedList<Place> places = new LinkedList<>();
+    private FeedReaderDbHelper db = new FeedReaderDbHelper(this);
+    private PlaceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

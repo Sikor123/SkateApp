@@ -9,26 +9,51 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Klasa rozszerzająca SQLiteOpenHelper, zawiera ona metody potrzebne do obsługi bazy danych.
+ */
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "FeedReader.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "FeedReader.db";
 
+    /**
+     * Kostruktor klasy
+     * @param context obecny context aplikacji.
+     */
     public FeedReaderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+    /** Metoda wywoływana gdy baza danych jest tworzona po raz pierwszy.
+     * Tutaj tworzymy tabele i wypełniamy początkową zawartością bazę danych.
+     * @param db Baza danych którą tworzymy.
+     */
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FeedReaderContract.getSqlCreateEntries());
     }
+
+    /**
+     * Wywoływana gdy baza danych musi zostać zaktualizowana.
+     * @param db baza danych która jest aktualizowana.
+     * @param oldVersion numer identyfikujacy stara wersje.
+     * @param newVersion numer identyfikujacy nowa wersję.
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         //db.execSQL(FeedReaderContract.getSqlDeleteEntries());
         //onCreate(db);
     }
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
-    }
+
+    /**
+     * Metoda pozwalająca nam dodać nowy wpis do bazy danych.
+     * @param title Tutuł nowego miejsca.
+     * @param description Opis nowego miejsca.
+     * @param lat Pozycja geograficzna lat nowego miejsca.
+     * @param lng Pozycja geograficzna lng nowego miejsca.
+     * @return Metoda zwraca id nowo dodanego miejsca.
+     */
     public long addPlace(String title, String description, double lat, double lng) {
         // Gets the data repository in write mode
         SQLiteDatabase db = getWritableDatabase();
@@ -44,6 +69,12 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         long newRowId = db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         return newRowId;
     }
+
+    /**
+     * Metoda zwracająca nam miejsce z bazy danych.
+     * @param id id miesca które metoda ma zwrócić.
+     * @return zwraca miejsce w postaci obiektu Place.
+     */
     public Place getPlace(int id){
         Place place = new Place();
         SQLiteDatabase db = getReadableDatabase();
@@ -71,6 +102,11 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         cursor.close();
         return place;
     }
+
+    /**
+     * Metoda pozwalająca uzyskać nam wszystkie miejsca zapisane w bazie danych.
+     * @return Wszystkie miejsca z bazy danych w postaci LinkedListy.
+     */
     public LinkedList<Place> getAllPlaces(){
         SQLiteDatabase db = getReadableDatabase();
         LinkedList<Place> places = new LinkedList<>();
@@ -88,12 +124,26 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
         cursor.close();
         return places;
     }
+
+    /**
+     * Metoda pozwalająca usunąć miejsce pod podanym id.
+     * @param id Id miejsca które chcemy usunąć.
+     */
     public void removePlace(int id){
         SQLiteDatabase db = getWritableDatabase();
         String selection = FeedReaderContract.FeedEntry._ID + "=?";
         String[] selectionArgs = {"" + id};
         db.delete(FeedReaderContract.FeedEntry.TABLE_NAME, selection, selectionArgs);
     }
+
+    /**
+     * Metoda pozwalajaca nam zaktualizowac miejsce o podanym id w bazie danych.
+     * @param id id miejsca ktore chcemy edytowac.
+     * @param title nowy title.
+     * @param description nowy description.
+     * @param lat nowy lat.
+     * @param lng nowy lng.
+     */
     public void updatePlace(int id, String title, String description, double lat, double lng){
         SQLiteDatabase db = getWritableDatabase();
 
